@@ -1,0 +1,125 @@
+public class FormulaEvaluator {
+    
+    private string name = 'sumit panda';
+    public FormulaEvaluator(){
+    }
+    //validate parenthesis
+    public boolean validate(){
+        
+        boolean result = true;
+        stack mystack = new stack();
+        String current,previous;
+        for(integer i=0;i<name.length();i++){
+            current = name.substring(i,i+1);
+            if(current.equals('(')){
+                mystack.push(current);
+            }
+            if(current.equals(')')){
+                if(mystack.isEmpty()){
+                    result = false;
+                }else{
+                    previous = mystack.peek();
+                    if(current.equals(')') && previous.equals('(')){
+                        mystack.pop();
+                    }
+                }
+            }
+            System.debug('current : '+current+'previous: '+previous);
+        }
+        if(!mystack.isEmpty()) {
+            result = false;
+        }
+        
+        return result;
+    }
+
+
+    //wrapper class act like stack LIFO
+    public class stack{
+        
+        public List<string> charsets {get;set;}
+        
+        public void push(string ele){
+            charsets.add(ele);
+        }
+        public Boolean pop(){
+            if(charsets.isEmpty()){
+                return false;
+            }
+            charsets.remove(charsets.size()-1);
+            return true;
+        }
+        public string peek(){
+            if(charsets.isEmpty()){
+                return '';
+            }
+            return charsets.get(charsets.size()-1);
+        }
+        public Integer searchIndex(string ele){
+            Integer index = 0;
+            if(charsets.contains(ele)){
+                for(Integer i=0;i<charsets.size();i++){
+                    if(charsets.get(i) == ele){
+                        index = i; 
+                    }
+                }
+            }
+            return index;
+        }
+        public Boolean isEmpty(){
+            return charsets.isEmpty();
+        }
+    }
+    public void evaluate(string expression){
+
+		 // List for numbers: 'values' 
+	    List<Integer> values = new List<Integer>(); 
+
+	    // List for Operators: 'ops' 
+	    List<Character> ops = new List<Character>();
+
+	    Integer len = expression.length();
+	    String currentToken ;
+	    for(integer i=0;i<len;i++){
+	    	currentToken = expression.charAt(i);
+	    	if(currentToken >= '0' && currentToken <= '9'){
+	    		String sbuf = '';
+		        // There may be more than one digits in number 
+		        while (i < len && currentToken >= '0' && currentToken <= '9')  {
+		        	sbuf += currentToken;
+		        	i = i+1;
+		        	currentToken = expression.charAt(i);
+		        } 
+		        values.add(Integer.valueOf(sbuf));
+	    	}else if (currentToken == '(') {
+	            ops.add(currentToken); 
+	        }else if (currentToken == ')') {
+	        	//evaluate the expression
+	        	//values.peek() != '('
+	        	while ( != '('){
+	        		values.push();
+	        	}
+	        }
+	    }
+	    System.debug('current : '+current+'previous: '+previous);
+	}
+	public static void calculate(){
+		
+	}
+	public static Integer applyOp(String op, Integer b, Integer a){ 
+	    switch (op){ 
+	    case '+': 
+	        return a + b; 
+	    case '-': 
+	        return a - b; 
+	    case '*': 
+	        return a * b; 
+	    case '/': 
+	        if (b == 0) 
+	            throw new
+	            UnsupportedOperationException("Cannot divide by zero"); 
+	        return a / b; 
+	    } 
+	    return 0; 
+	} 
+}
